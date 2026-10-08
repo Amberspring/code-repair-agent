@@ -1,0 +1,40 @@
+{
+  "id": "find-in-sorted",
+  "fingerprint": "ba3da2c619c60b8931dd477f55977bf3df395c39dbd4d222cc107953848e4867",
+  "source": "def find_in_sorted(arr, x):\n    def binsearch(start, end):\n        if start > end:\n            return -1\n        mid = start + (end - start) // 2\n        if x < arr[mid]:\n            return binsearch(start, mid - 1)\n        elif x > arr[mid]:\n            return binsearch(mid + 1, end)\n        else:\n            return mid\n\n    return binsearch(0, len(arr) - 1)",
+  "events": [
+    {
+      "type": "patch",
+      "iteration": 1,
+      "usage": {
+        "prompt_tokens": 318,
+        "total_tokens": 417,
+        "completion_tokens": 99,
+        "prompt_tokens_details": null
+      },
+      "source": "def find_in_sorted(arr, x):\n    def binsearch(start, end):\n        if start > end:\n            return -1\n        mid = start + (end - start) // 2\n        if x < arr[mid]:\n            return binsearch(start, mid - 1)\n        elif x > arr[mid]:\n            return binsearch(mid + 1, end)\n        else:\n            return mid\n\n    return binsearch(0, len(arr) - 1)",
+      "sha256": "c38f01357ba61182eda5f905797c47606d49ab8073db9a49c799417f8c9270e8"
+    },
+    {
+      "type": "feedback",
+      "result": {
+        "passed": true,
+        "pass_count": 1,
+        "count": 1,
+        "failures": [],
+        "worker_url": "https://github.com/Amberspring/code-repair-agent/actions/runs/37779751291"
+      }
+    }
+  ],
+  "iterations": 1,
+  "status": "complete",
+  "public_passed": true,
+  "hidden": {
+    "passed": true,
+    "pass_count": 6,
+    "count": 6,
+    "failures": [],
+    "worker_url": "https://github.com/Amberspring/code-repair-agent/actions/runs/37779831510"
+  },
+  "elapsed_seconds": 70.35249080000358
+}

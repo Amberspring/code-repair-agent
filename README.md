@@ -22,3 +22,9 @@ Docker 强制禁网、只读根文件系统、只读候选文件、非 root、25
 默认评测数据来自 [QuixBugs](https://github.com/jkoppel/QuixBugs) 固定提交的八个自包含算法：错误代码和测试均原样取自上游，未自行制造新 bug。第一条原有测试公开给模型，其余仅用于最终评估；来源、文件 SHA-256、选择规则及 MIT 许可证位于 data/quixbugs.manifest.json 与 data/QuixBugs-LICENSE.txt。公开基准可能已出现在模型预训练中，所以“隐藏于提示”不等于模型从未见过，八题成绩也不能称为完整 40 题 QuixBugs 或 SWE-bench 成绩。
 
 data/tasks.json 的三道自编题仅为工程样例，需显式 --tasks 才使用。测试中的脚本化模型仅验证状态闭环，不计为模型修复能力。真实模型结果需 CLI 运行后保存，单轮与多轮应使用同一模型与任务集；多 Agent、路由属于后续实验。
+
+## 2026-10-08 实测
+
+同一 Qwen3-8B、同一八题、temperature=0：单轮修复成功 4/8，隐藏测试通过 37/53（69.81%）；最多三轮公开测试反馈修复成功 5/8，隐藏测试通过 45/53（84.91%）。两组分别消耗模型报告的 2884、3355 tokens，平均端到端 77.92、87.66 秒，包含 GitHub worker 排队，不能作为纯模型推理速度。完整候选代码、SHA-256、公开反馈、最终隐藏结果、模型 usage 与 Actions URL 位于 `results/repair-single-20261008/` 和 `results/repair-multi-20261008/`。
+
+多轮只修复了公开测试超时的 bitcount；find_first_in_sorted 的越界、quicksort 对重复元素的错误去重、max_sublist_sum 的全负数边界仍未通过隐藏测试。隐藏结果没有回传模型追加修复，这体现公开测试覆盖不足。八题小样本只支持本次观测，不支持显著性、完整 QuixBugs 或 SWE-bench 提升结论。

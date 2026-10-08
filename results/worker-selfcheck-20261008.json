@@ -1,0 +1,10 @@
+{
+  "scope": "infrastructure fixture, not AI repair result",
+  "result": {
+    "passed": true,
+    "pass_count": 1,
+    "count": 1,
+    "failures": [],
+    "worker_url": "https://github.com/Amberspring/code-repair-agent/actions/runs/37778322802"
+  }
+}

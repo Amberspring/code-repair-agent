@@ -1,0 +1,40 @@
+{
+  "id": "find-first-in-sorted",
+  "fingerprint": "08aab19d1777c6015eac34eae931161f40070673a181a1bd75206e8017b035e7",
+  "source": "def find_first_in_sorted(arr, x):\n    lo = 0\n    hi = len(arr)\n\n    while lo <= hi:\n        mid = (lo + hi) // 2\n\n        if mid < len(arr) and x == arr[mid] and (mid == 0 or x != arr[mid - 1]):\n            return mid\n\n        elif x <= arr[mid]:\n            hi = mid - 1\n\n        else:\n            lo = mid + 1\n\n    return -1",
+  "events": [
+    {
+      "type": "patch",
+      "iteration": 1,
+      "usage": {
+        "prompt_tokens": 332,
+        "total_tokens": 434,
+        "completion_tokens": 102,
+        "prompt_tokens_details": null
+      },
+      "source": "def find_first_in_sorted(arr, x):\n    lo = 0\n    hi = len(arr)\n\n    while lo <= hi:\n        mid = (lo + hi) // 2\n\n        if mid < len(arr) and x == arr[mid] and (mid == 0 or x != arr[mid - 1]):\n            return mid\n\n        elif x <= arr[mid]:\n            hi = mid - 1\n\n        else:\n            lo = mid + 1\n\n    return -1",
+      "sha256": "f67834bc416fb3f4a9bf3507df7dcfdc0e5d2a2c576b41e1cc9204cdc414081b"
+    },
+    {
+      "type": "feedback",
+      "result": {
+        "passed": true,
+        "pass_count": 1,
+        "count": 1,
+        "failures": [],
+        "worker_url": "https://github.com/Amberspring/code-repair-agent/actions/runs/37779572587"
+      }
+    }
+  ],
+  "iterations": 1,
+  "status": "complete",
+  "public_passed": true,
+  "hidden": {
+    "passed": false,
+    "pass_count": 0,
+    "count": 6,
+    "error": "Traceback (most recent call last):\n  File \"<string>\", line 7, in <module>\n  File \"/work/candidate.py\", line 11, in find_first_in_sorted\n    elif x <= arr[mid]:\n              ~~~^^^^^\nIndexError: list index out of range\n",
+    "worker_url": "https://github.com/Amberspring/code-repair-agent/actions/runs/37779662270"
+  },
+  "elapsed_seconds": 87.75096430000121
+}

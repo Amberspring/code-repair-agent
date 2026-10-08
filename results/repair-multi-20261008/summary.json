@@ -1,0 +1,15 @@
+{
+  "status": "measured",
+  "model": "Qwen3-8B",
+  "iteration_budget": 3,
+  "n": 8,
+  "sandbox": "github:Amberspring/code-repair-agent",
+  "dataset_sha256": "4bc78568615fa3722f70f1b7cd5ff37d0e016bfa6a17b7acb9e168c85803bc2e",
+  "repair_success_rate": 0.625,
+  "hidden_test_pass_rate": 0.8490566037735849,
+  "mean_iterations": 1.125,
+  "mean_seconds": 87.6597053000014,
+  "tool_calls": 17,
+  "reported_tokens": 3355,
+  "limitations": "See dataset manifest for source and subset selection. Public benchmark may be in pretraining. Hidden tests withheld from prompts, not a tamper-proof grader. Docker shares host kernel; use disposable worker for hostile code. Tokens cover successful API responses only; no inferred monetary cost."
+}
