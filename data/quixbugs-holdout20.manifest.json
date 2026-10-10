@@ -1,0 +1,213 @@
+{
+  "source": "https://github.com/jkoppel/QuixBugs",
+  "commit": "4257f44b0ff1181dedaedee6a447e133219fcebf",
+  "license": "MIT",
+  "split": "holdout",
+  "tasks": 20,
+  "selection": "Lowest SHA256(task name) 20 algorithms after excluding the eight development tasks; selected without reading answers; self-contained JSON-compatible subset, not full 40-task benchmark",
+  "test_split": "First upstream test public, remaining tests withheld from model prompts",
+  "limitations": "Public benchmark may occur in model pretraining; withheld is not unseen. No correct_python_programs source provided to model.",
+  "task_sha256": "df923e80d5a6e168756b0854134368b2fc5f6dab14311e0ee786424d6c610255",
+  "files": [
+    {
+      "path": "python_programs/next_palindrome.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/next_palindrome.py",
+      "sha256": "a61013879591ddcde6a26cfac96c1575298afa201a03a7c903245496a099c2fd"
+    },
+    {
+      "path": "json_testcases/next_palindrome.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/next_palindrome.json",
+      "sha256": "189457d7a89fd32f7c397c4cb0a9cfb806114a0f21b7d75c68cdfe59a4ad0063"
+    },
+    {
+      "path": "python_programs/rpn_eval.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/rpn_eval.py",
+      "sha256": "52002ae22f8f2eb7dbc6dfabfb6e5bf21807b21805bcaf60248ae9630673dffe"
+    },
+    {
+      "path": "json_testcases/rpn_eval.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/rpn_eval.json",
+      "sha256": "dafc3ecc74adb791c6fc16684e1a8fd8767ae09fc3b2d1e082498718ac2575d9"
+    },
+    {
+      "path": "python_programs/lcs_length.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/lcs_length.py",
+      "sha256": "f67020074297cb3506a4524fd71729597059f9a91eb61b71b86bd49ce85df00b"
+    },
+    {
+      "path": "json_testcases/lcs_length.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/lcs_length.json",
+      "sha256": "70e3b39d4580bd6126499c8a80191041457645191d18e51719b5aaa989fadc0c"
+    },
+    {
+      "path": "python_programs/subsequences.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/subsequences.py",
+      "sha256": "bab1a76aa1a35c882d9f7fff5ea7068f3a3b35d1f3a7ab398aef46a9b017dda0"
+    },
+    {
+      "path": "json_testcases/subsequences.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/subsequences.json",
+      "sha256": "5acd1500a24681a6a4802a3526ed394e307afb1a5435a583b69dc3fdf180de0b"
+    },
+    {
+      "path": "python_programs/flatten.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/flatten.py",
+      "sha256": "f6f5a5f9442e63245dc593955467da427308e2c66f84351fff1f27cd3a136780"
+    },
+    {
+      "path": "json_testcases/flatten.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/flatten.json",
+      "sha256": "efc508d84273f10f95d521725727f9c7a4df6bf5b2f32d92e2ae166d48ccb6ca"
+    },
+    {
+      "path": "python_programs/levenshtein.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/levenshtein.py",
+      "sha256": "c3f2d471861c46b69990bfe271c646ecf52d51f4f0aa3b8b6d5104b102b442ff"
+    },
+    {
+      "path": "json_testcases/levenshtein.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/levenshtein.json",
+      "sha256": "8fe3742cd9fc1933af42cf12464850d6b83968cf4b7d40afc4194007b80da053"
+    },
+    {
+      "path": "python_programs/kth.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/kth.py",
+      "sha256": "148b8e6ffe80fe69d8602d45d91cbb44c82934c62c38ef1bae5cf0c30cfff861"
+    },
+    {
+      "path": "json_testcases/kth.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/kth.json",
+      "sha256": "e6a2cf79882b1ed93885e5601a117c34b1bf9cdbb9017c427959f4729695683e"
+    },
+    {
+      "path": "python_programs/sieve.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/sieve.py",
+      "sha256": "570704d5faf58d0fd702aa2278b3bd43bc52b53183b4f8193acd39c11d049807"
+    },
+    {
+      "path": "json_testcases/sieve.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/sieve.json",
+      "sha256": "d5a9f08587b513973f341b636fb2078544e301558b48892de2f1886a613284ce"
+    },
+    {
+      "path": "python_programs/get_factors.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/get_factors.py",
+      "sha256": "c544115d6aeb2d6c762c3902033e27708cc48d79d3b42df95f2934db3e8ccf2a"
+    },
+    {
+      "path": "json_testcases/get_factors.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/get_factors.json",
+      "sha256": "6f88a160ce1726131d629bb02f93aab47cd9f1aaa1d1a8bce6f03b45a176f9cc"
+    },
+    {
+      "path": "python_programs/mergesort.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/mergesort.py",
+      "sha256": "bc6b0977582bb394187dd3418f94811e2bc4cc9bd675b9410baf336a833389a6"
+    },
+    {
+      "path": "json_testcases/mergesort.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/mergesort.json",
+      "sha256": "87ec167b38027d7f5af257fb91fb316288f97a5b87424e8f19716fc339ff792e"
+    },
+    {
+      "path": "python_programs/sqrt.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/sqrt.py",
+      "sha256": "e4e0a68773d380cadba19c5d2d860633dc6c2a038bc59ddac0a7c8021b8c3726"
+    },
+    {
+      "path": "json_testcases/sqrt.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/sqrt.json",
+      "sha256": "f19a000119164d426c74f0edacba7b2492e6463d5b0b7eb2046157a10ce876b4"
+    },
+    {
+      "path": "python_programs/pascal.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/pascal.py",
+      "sha256": "b064475e9710b95396b629c1a0d4de9252af9e5fa30227f39963508e302259db"
+    },
+    {
+      "path": "json_testcases/pascal.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/pascal.json",
+      "sha256": "66fd9cba9eb3e791edceb0cc331246dc929352db3fbd5f39f2ef67eb97551d30"
+    },
+    {
+      "path": "python_programs/next_permutation.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/next_permutation.py",
+      "sha256": "0411c86a51f9898b02ecd778c83d973124d769dda7d8c3831f803871eef4a22f"
+    },
+    {
+      "path": "json_testcases/next_permutation.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/next_permutation.json",
+      "sha256": "ae9beb68d4b00b93100c04b8e5200c596bb93f44f38e8bac051f6b73279a3ea3"
+    },
+    {
+      "path": "python_programs/kheapsort.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/kheapsort.py",
+      "sha256": "bbc1e7df0c79b96bb0512818d507e7acb493fc76670cda4552d09d47b7cdabcf"
+    },
+    {
+      "path": "json_testcases/kheapsort.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/kheapsort.json",
+      "sha256": "0ae5915a0d1d7eef81f2804214b58ccd1d5a1186e23fefa6010bcdb9472cecbd"
+    },
+    {
+      "path": "python_programs/knapsack.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/knapsack.py",
+      "sha256": "b55774fb5f207cfbf8677e0bae5b5eb2f116cf0b13dd0db4a988286219e327fa"
+    },
+    {
+      "path": "json_testcases/knapsack.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/knapsack.json",
+      "sha256": "36cb94e1886dbb848dffc52f03d3f60d79780ea8d1f1a6418e91c4e40ae9eb0c"
+    },
+    {
+      "path": "python_programs/lis.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/lis.py",
+      "sha256": "c66300c299aefa1d3a92822cea4bb7e0b96ccc3db349ac4ef538c0f4fe90f69f"
+    },
+    {
+      "path": "json_testcases/lis.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/lis.json",
+      "sha256": "10fbda3e11adc553a4d376d9c516005dcccdc670b7766c69d074942119bbfdbb"
+    },
+    {
+      "path": "python_programs/longest_common_subsequence.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/longest_common_subsequence.py",
+      "sha256": "971c60f971d33255a8c675669d139d68a57408b6565b1ab8f40748f3377a99e1"
+    },
+    {
+      "path": "json_testcases/longest_common_subsequence.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/longest_common_subsequence.json",
+      "sha256": "76310dafb5a07a817af526134a9d0fca52372da470cdc27c12dab999243c59f1"
+    },
+    {
+      "path": "python_programs/possible_change.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/possible_change.py",
+      "sha256": "38d526b0b2bde93bccabf580a909df9fd46a2ba2325ef325c6578903bfad4f66"
+    },
+    {
+      "path": "json_testcases/possible_change.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/possible_change.json",
+      "sha256": "bc534852572314950e2af80853ced17c15a0c54d0c47b7bc81ad0d34e387c461"
+    },
+    {
+      "path": "python_programs/powerset.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/powerset.py",
+      "sha256": "32349b0ab55c8e5c5f6f88dd042ef560da9ba94de28bd5fce9da592b2f7a2a51"
+    },
+    {
+      "path": "json_testcases/powerset.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/powerset.json",
+      "sha256": "fc2512f1d553805e587b8fb4967a89cd107336f9b3aa3f6e013da019f197a7e0"
+    },
+    {
+      "path": "python_programs/bucketsort.py",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/python_programs/bucketsort.py",
+      "sha256": "a4afabb8458f9b18994958db9fae326d7c08d9ef2386f898fdd0e512d86afbfe"
+    },
+    {
+      "path": "json_testcases/bucketsort.json",
+      "url": "https://raw.githubusercontent.com/jkoppel/QuixBugs/4257f44b0ff1181dedaedee6a447e133219fcebf/json_testcases/bucketsort.json",
+      "sha256": "4cf65cdff54416d139bcadb8296d79b3cf2e4317ccca0cd443b13050d2c1c273"
+    }
+  ]
+}

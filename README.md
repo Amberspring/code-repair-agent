@@ -13,6 +13,20 @@ python -m repair.cli --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iteration
 python -m repair.cli --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iterations 3 --output results/multi
 ```
 
+新的正式评测使用固定的 20 题留出清单 `data/quixbugs-holdout20.json`。它按任务名 SHA-256 排序从未进入原八题开发集的 JSON 兼容任务中预先选出，正确程序不会进入提示；公开基准仍可能出现在模型预训练中，所以这里只称项目留出集。下面三组分别是真实的单 Agent 单轮、单 Agent 三轮反馈、Planner/Repairer/Verifier 协作；后两组最多各用三次模型调用，逐角色调用与 token 都写入结果。
+
+```sh
+python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iterations 1 --output results/holdout-single
+python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iterations 3 --output results/holdout-feedback
+python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-8B --strategy collaborative --iterations 1 --output results/holdout-collaborative
+```
+
+模型路由在读取答案前只按错误源码的行数与控制流复杂度选择模型，并把阈值、分配模型和调用量写进 checkpoint。传入第二个真实服务模型即可运行路由对照；未跑完前不填写节省率或成功率。
+
+```sh
+python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-4B --strong-model Qwen3-8B --route-threshold 30 --iterations 3 --output results/holdout-routed
+```
+
 API 密钥通过 REPAIR_API_KEY 环境变量提供。失败恢复显式使用 --resume；相同任务与总轮数预算继续执行，不额外获得重试次数。修复任务只发送题目、错误代码与公开测试；隐藏测试仅在最终评估执行，期望输出保留在宿主进程。
 
 本机或 AutoDL 容器没有 Docker 时，可以追加 `--github-worker Amberspring/code-repair-agent`，通过本机已授权的 `gh` 将公开基准候选代码交给专用 GitHub Actions worker。工作流将输入作为 base64 数据解码，再交给相同的 Docker 隔离器；GitHub 凭证不传给模型或容器，每次执行返回可追溯的 worker URL。该方式会上传候选代码及测试到指定 GitHub 仓库的工作流，不应用于未经授权的私有代码；API 推理仍在配置的模型服务上进行，worker 等待时间计入端到端耗时。
@@ -21,7 +35,7 @@ Docker 强制禁网、只读根文件系统、只读候选文件、非 root、25
 
 默认评测数据来自 [QuixBugs](https://github.com/jkoppel/QuixBugs) 固定提交的八个自包含算法：错误代码和测试均原样取自上游，未自行制造新 bug。第一条原有测试公开给模型，其余仅用于最终评估；来源、文件 SHA-256、选择规则及 MIT 许可证位于 data/quixbugs.manifest.json 与 data/QuixBugs-LICENSE.txt。公开基准可能已出现在模型预训练中，所以“隐藏于提示”不等于模型从未见过，八题成绩也不能称为完整 40 题 QuixBugs 或 SWE-bench 成绩。
 
-data/tasks.json 的三道自编题仅为工程样例，需显式 --tasks 才使用。测试中的脚本化模型仅验证状态闭环，不计为模型修复能力。真实模型结果需 CLI 运行后保存，单轮与多轮应使用同一模型与任务集；多 Agent、路由属于后续实验。
+data/tasks.json 的三道自编题仅为工程样例，需显式 --tasks 才使用。测试中的脚本化模型仅验证状态闭环，不计为模型修复能力。协作与路由执行链现已具备，但在新的真实模型结果落盘前仍属于待实验能力，不能用单元测试代替成功率。
 
 ## 2026-10-08 实测
 
