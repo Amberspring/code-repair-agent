@@ -6,18 +6,22 @@ import subprocess
 from pathlib import Path
 
 COMMIT = "4257f44b0ff1181dedaedee6a447e133219fcebf"
-NAMES = ("bitcount", "find_first_in_sorted", "find_in_sorted", "gcd", "is_valid_parenthesization", "max_sublist_sum", "quicksort", "to_base")
+DEVELOPMENT_NAMES = ("bitcount", "find_first_in_sorted", "find_in_sorted", "gcd", "is_valid_parenthesization", "max_sublist_sum", "quicksort", "to_base")
+HOLDOUT_NAMES = ("next_palindrome", "rpn_eval", "lcs_length", "subsequences", "flatten", "levenshtein", "kth", "sieve",
+                 "get_factors", "mergesort", "sqrt", "pascal", "next_permutation", "kheapsort", "knapsack", "lis",
+                 "longest_common_subsequence", "possible_change", "powerset", "bucketsort")
 
 
-def build(source, output):
+def build(source, output, split="development"):
     source, output = Path(source), Path(output)
     commit = subprocess.check_output(["git", "-C", str(source), "rev-parse", "HEAD"], text=True).strip()
     if commit != COMMIT:
         raise ValueError("Checkout the documented pinned commit first")
     if subprocess.check_output(["git", "-C", str(source), "status", "--porcelain"], text=True).strip():
         raise ValueError("Upstream checkout must be clean")
+    names = DEVELOPMENT_NAMES if split == "development" else HOLDOUT_NAMES
     files, tasks = [], []
-    for name in NAMES:
+    for name in names:
         code_path = source / f"python_programs/{name}.py"
         test_path = source / f"json_testcases/{name}.json"
         code = code_path.read_text(encoding="utf-8")
@@ -33,8 +37,10 @@ def build(source, output):
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(tasks, indent=2), encoding="utf-8")
     output.with_name("QuixBugs-LICENSE.txt").write_bytes((source / "LICENSE").read_bytes())
-    manifest = {"source": "https://github.com/jkoppel/QuixBugs", "commit": COMMIT, "license": "MIT", "tasks": len(tasks),
-                "selection": "Predeclared eight self-contained JSON-compatible algorithms, not full 40-task benchmark; no new bugs/tests synthesized",
+    selection = ("Predeclared eight development algorithms" if split == "development" else
+                 "Lowest SHA256(task name) 20 algorithms after excluding the eight development tasks; selected without reading answers")
+    manifest = {"source": "https://github.com/jkoppel/QuixBugs", "commit": COMMIT, "license": "MIT", "split": split,
+                "tasks": len(tasks), "selection": selection + "; self-contained JSON-compatible subset, not full 40-task benchmark",
                 "test_split": "First upstream test public, remaining tests withheld from model prompts",
                 "limitations": "Public benchmark may occur in model pretraining; withheld is not unseen. No correct_python_programs source provided to model.",
                 "task_sha256": hashlib.sha256(output.read_bytes()).hexdigest(), "files": files}
@@ -46,5 +52,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--source", required=True)
     p.add_argument("--output", default="data/quixbugs.json")
+    p.add_argument("--split", choices=("development", "holdout"), default="development")
     a = p.parse_args()
-    build(a.source, a.output)
+    build(a.source, a.output, a.split)
