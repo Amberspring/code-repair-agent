@@ -85,6 +85,7 @@ def run(task, model, sandbox, checkpoint, iterations=3, resume=False, metadata=N
             break
         messages.append({"role": "user", "content": "Public test feedback: " + json.dumps(result)})
     state["public_passed"] = state["events"][-1]["result"]["passed"] if state["events"] else False
+    state["model_call_attempts"] = {"repairer": state["iterations"]}
     # Hidden outputs never enter the repair prompt. This is the final evaluator, no retries on hidden tests.
     state["hidden"] = sandbox.run(state["source"], task["entry"], task["hidden_tests"])
     state["elapsed_seconds"] = state.get("elapsed_seconds", 0) + time.perf_counter() - start
@@ -110,6 +111,7 @@ def run_collaborative(task, planner, repairer, verifier, sandbox, checkpoint, it
             raise ValueError("Task or run configuration differs from checkpoint")
         if state["status"] == "complete":
             return state
+    state.setdefault("model_call_attempts", {"planner": 0, "repairer": 0, "verifier": 0})
     path.parent.mkdir(parents=True, exist_ok=True)
 
     def save():
@@ -119,8 +121,11 @@ def run_collaborative(task, planner, repairer, verifier, sandbox, checkpoint, it
 
     task_view = {"description": task["description"], "entry": task["entry"], "source": task["buggy"],
                  "public_tests": task["public_tests"]}
+    start = time.perf_counter()
     plan_event = next((event for event in state["events"] if event["type"] == "plan"), None)
     if plan_event is None:
+        state["model_call_attempts"]["planner"] += 1
+        save()
         plan, usage = planner([
             {"role": "system", "content": "Plan a repair for the Python function. Do not output code. Public tests are incomplete; identify likely edge cases."},
             {"role": "user", "content": json.dumps(task_view)},
@@ -141,9 +146,9 @@ def run_collaborative(task, planner, repairer, verifier, sandbox, checkpoint, it
         elif event["type"] == "verification" and not event["approved"]:
             messages.append({"role": "user", "content": "Verifier review: " + event["content"]})
 
-    start = time.perf_counter()
     while state["iterations"] < iterations:
         state["iterations"] += 1
+        state["model_call_attempts"]["repairer"] += 1
         save()
         try:
             source, usage = repairer(messages)
@@ -151,6 +156,8 @@ def run_collaborative(task, planner, repairer, verifier, sandbox, checkpoint, it
             state["events"].append({"type": "patch", "iteration": state["iterations"], "usage": usage, "source": source,
                                     "sha256": hashlib.sha256(source.encode()).hexdigest()})
             result = sandbox.run(source, task["entry"], task["public_tests"])
+            state["model_call_attempts"]["verifier"] += 1
+            save()
             review, review_usage = verifier([
                 {"role": "system", "content": "Review the candidate against the task and public result. First line must be APPROVE or REVISE, then a concise reason. Do not output code."},
                 {"role": "user", "content": json.dumps({"task": task_view, "planner_analysis": plan_event["content"],

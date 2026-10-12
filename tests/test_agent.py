@@ -22,6 +22,7 @@ def test_feedback_budget_hidden_isolation_and_resume(tmp_path):
     checkpoint = tmp_path / "a.json"
     result = run(task, model, SandboxFixture(), checkpoint, 3)
     assert result["public_passed"] and result["hidden"]["passed"] and result["iterations"] == 2
+    assert result["model_call_attempts"] == {"repairer": 2}
     assert run(task, model, SandboxFixture(), checkpoint, 3, resume=True) == result
     assert len(calls) == 2
     with pytest.raises(FileExistsError):
@@ -57,6 +58,7 @@ def test_collaborative_roles_are_real_and_hidden_stays_isolated(tmp_path):
                                metadata={"repair_model": "repair"})
     assert calls == ["planner", "repairer", "verifier"]
     assert result["public_passed"] and result["verification_approved"] and result["hidden"]["passed"]
+    assert result["model_call_attempts"] == {"planner": 1, "repairer": 1, "verifier": 1}
     assert [event["type"] for event in result["events"]] == ["plan", "patch", "feedback", "verification"]
 
 
@@ -64,3 +66,24 @@ def test_complexity_score_counts_control_flow():
     simple = {"buggy": "def f(x):\n return x"}
     branch = {"buggy": "def f(x):\n if x:\n  return x\n return 0"}
     assert complexity_score(branch) > complexity_score(simple)
+
+
+def test_failed_model_request_still_counts_as_a_call(tmp_path):
+    task = {"id": "a", "description": "identity", "entry": "f", "buggy": "def f(x): return x",
+            "public_tests": [], "hidden_tests": []}
+    attempts = 0
+
+    def model(_):
+        nonlocal attempts
+        attempts += 1
+        if attempts == 1:
+            raise ValueError("model response failed")
+        return "def f(x): return x", {"total_tokens": 10}
+
+    class Sandbox:
+        def run(self, *_):
+            return {"passed": True, "pass_count": 1, "count": 1}
+
+    result = run(task, model, Sandbox(), tmp_path / "failed-call.json", iterations=2)
+    assert result["model_call_attempts"]["repairer"] == 2
+    assert sum(event["type"] == "patch" for event in result["events"]) == 1

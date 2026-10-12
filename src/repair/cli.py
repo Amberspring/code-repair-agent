@@ -63,7 +63,7 @@ def main():
               "hidden_test_pass_rate": sum(r["hidden"]["pass_count"] for r in results) / sum(r["hidden"]["count"] for r in results),
               "mean_iterations": sum(r["iterations"] for r in results) / n,
               "mean_seconds": sum(r["elapsed_seconds"] for r in results) / n,
-              "model_calls": sum(e["type"] in {"plan", "patch", "verification"} for r in results for e in r["events"]),
+              "model_calls": sum(sum(r.get("model_call_attempts", {"repairer": r["iterations"]}).values()) for r in results),
               "reported_tokens": sum((e.get("usage") or {}).get("total_tokens", 0) for r in results for e in r["events"] if e["type"] in {"plan", "patch", "verification"}),
               "route_counts": {name: sum(r["metadata"]["repair_model"] == name for r in results)
                                for name in sorted({r["metadata"]["repair_model"] for r in results})},

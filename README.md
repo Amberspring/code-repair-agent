@@ -19,7 +19,10 @@ python -m repair.cli --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iteration
 python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iterations 1 --output results/holdout-single
 python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-8B --iterations 3 --output results/holdout-feedback
 python -m repair.cli --tasks data/quixbugs-holdout20.json --url http://127.0.0.1:8000/v1 --model Qwen3-8B --strategy collaborative --iterations 1 --output results/holdout-collaborative
+python scripts/compare_holdout.py --single results/holdout-single --feedback results/holdout-feedback --collaborative results/holdout-collaborative --gpu-yuan-per-hour 1.58 --output results/holdout-comparison-<unique-run-id>.json
 ```
+
+对照脚本强制三组使用相同的冻结 20 题 SHA-256 和 Qwen3-8B，分别限制为一次修复调用、最多三次修复调用、一次 Planner/Repairer/Verifier 协作。它报告每题解决与隐藏测试结果、包括失败尝试的模型调用、实际返回的 token、含 Planner 的端到端耗时，以及三组配对解决率差的固定种子 5000 次 bootstrap 95% 区间；API 未返回 usage 的调用单列，不能当成零成本。协作优于同样最多三次调用的反馈基线且配对区间下界大于零，才写作可靠的协作质量提升；否则只报告观察值与不确定性。按任务耗时乘 GPU 单价只是估算，实际费用要另附 AutoDL 账单。当前新 20 题三组模型实验尚未运行，上述命令不能被当作正面结果。
 
 模型路由在读取答案前只按错误源码的行数与控制流复杂度选择模型，并把阈值、分配模型和调用量写进 checkpoint。传入第二个真实服务模型即可运行路由对照；未跑完前不填写节省率或成功率。
 
